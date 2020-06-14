@@ -4,6 +4,7 @@ var USERS_QUANTITY = 25;
 var LIKES_MAX = 200;
 var LIKES_MIN = 15;
 var COMMENTS_MAX = 5;
+var AVATAR_MAX = 6;
 
 var ARRAY_NAMES = ['Жорик', 'Оскар', 'Ольга', 'Кристина',
   'Влад', 'Геннадий', 'Моника', 'Игнат'];
@@ -26,7 +27,7 @@ var similarElementTemplate = document.querySelector('#picture')
 var usersPhotos = [];
 
 var radomizeEverything = function (maxValue) {
-  var randomNumber = Math.floor((Math.random() * maxValue));
+  var randomNumber = Math.ceil((Math.random() * maxValue));
   if (randomNumber === 0) {
     randomNumber++;
   }
@@ -34,7 +35,7 @@ var radomizeEverything = function (maxValue) {
 };
 
 var addComment = function () {
-  var avatarNum = radomizeEverything(5);
+  var avatarNum = radomizeEverything(AVATAR_MAX);
   var comment = {
     avatar: '',
     message: '',
