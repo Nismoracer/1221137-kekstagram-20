@@ -2,6 +2,7 @@
 
 var USERS_QUANTITY = 25;
 var LIKES_MAX = 200;
+var LIKES_MIN = 15;
 var COMMENTS_MAX = 5;
 
 var ARRAY_NAMES = ['Жорик', 'Оскар', 'Ольга', 'Кристина',
@@ -26,11 +27,14 @@ var usersPhotos = [];
 
 var radomizeEverything = function (maxValue) {
   var randomNumber = Math.floor((Math.random() * maxValue));
+  if (randomNumber === 0) {
+    randomNumber++;
+  }
   return randomNumber;
 };
 
 var addComment = function () {
-  var avatarNum = radomizeEverything(5) + 1;
+  var avatarNum = radomizeEverything(5);
   var comment = {
     avatar: '',
     message: '',
@@ -43,7 +47,7 @@ var addComment = function () {
 };
 
 var fillProfile = function () {
-  var commentsNum = 1 + radomizeEverything(COMMENTS_MAX - 1);
+  var commentsNum = radomizeEverything(COMMENTS_MAX);
   var currentPhoto = {
     url: '',
     description: '',
@@ -52,21 +56,20 @@ var fillProfile = function () {
   };
 
   currentPhoto.description = 'Случайная фотография';
-  currentPhoto.likes = (15 + radomizeEverything(LIKES_MAX - 15)).toString();
+  currentPhoto.likes = (LIKES_MIN + radomizeEverything(LIKES_MAX - LIKES_MIN)).toString();
   for (var i = 0; i < commentsNum; i++) {
     currentPhoto.comments[i] = addComment();
   }
   return currentPhoto;
 };
 
-for (var i = 0; i < USERS_QUANTITY; i++) {
+for (var i = 1; i <= USERS_QUANTITY; i++) {
   usersPhotos[i] = fillProfile();
-  usersPhotos[i].url = 'photos/' + (i + 1).toString() + '.jpg';
+  usersPhotos[i].url = 'photos/' + i.toString() + '.jpg';
 }
 
 var renderPhotosList = function (photo) {
   var currentPhoto = similarElementTemplate.cloneNode(true);
-
   currentPhoto.querySelector('.picture__img').src = photo.url;
   currentPhoto.querySelector('.picture__comments').textContent = photo.comments.length.toString();
   currentPhoto.querySelector('.picture__likes').textContent = photo.likes;
@@ -75,7 +78,7 @@ var renderPhotosList = function (photo) {
 };
 
 var fragment = document.createDocumentFragment();
-for (i = 0; i < usersPhotos.length; i++) {
+for (i = 1; i <= USERS_QUANTITY; i++) {
   fragment.appendChild(renderPhotosList(usersPhotos[i]));
 }
 similarListElement.appendChild(fragment);
