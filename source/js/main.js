@@ -1,6 +1,13 @@
 'use strict';
 
 (function () {
+
+  var USERS_QUANTITY = 25;
+  var LIKES_MAX = 200;
+  var LIKES_MIN = 15;
+  var COMMENTS_MAX = 5;
+  var AVATAR_MAX = 6;
+
   var ARRAY_NAMES = ['Жорик', 'Оскар', 'Ольга', 'Кристина',
     'Влад', 'Геннадий', 'Моника', 'Игнат'];
 
@@ -14,6 +21,7 @@
   ];
 
   var similarListElement = document.querySelector('.pictures');
+  var uploadWindowOpen = document.querySelector('#upload-file');
 
   var similarElementTemplate = document.querySelector('#picture')
     .content
@@ -30,7 +38,7 @@
   };
 
   var addComment = function () {
-    var avatarNum = radomizeEverything(window.Parameters.AVATAR_MAX);
+    var avatarNum = radomizeEverything(AVATAR_MAX);
     var comment = {
       avatar: '',
       message: '',
@@ -43,7 +51,7 @@
   };
 
   var fillProfile = function () {
-    var commentsNum = radomizeEverything(window.Parameters.COMMENTS_MAX);
+    var commentsNum = radomizeEverything(COMMENTS_MAX);
     var currentPhoto = {
       url: '',
       description: '',
@@ -52,14 +60,14 @@
     };
 
     currentPhoto.description = 'Случайная фотография';
-    currentPhoto.likes = (window.Parameters.LIKES_MIN + radomizeEverything(window.Parameters.LIKES_MAX - window.Parameters.LIKES_MIN)).toString();
+    currentPhoto.likes = (LIKES_MIN + radomizeEverything(LIKES_MAX - LIKES_MIN)).toString();
     for (var i = 0; i < commentsNum; i++) {
       currentPhoto.comments[i] = addComment();
     }
     return currentPhoto;
   };
 
-  for (var i = 1; i <= window.Parameters.USERS_QUANTITY; i++) {
+  for (var i = 1; i <= USERS_QUANTITY; i++) {
     usersPhotos[i] = fillProfile();
     usersPhotos[i].url = 'photos/' + i.toString() + '.jpg';
   }
@@ -74,9 +82,12 @@
   };
 
   var fragment = document.createDocumentFragment();
-  for (i = 1; i <= window.Parameters.USERS_QUANTITY; i++) {
+
+  for (i = 1; i <= USERS_QUANTITY; i++) {
     fragment.appendChild(renderPhotosList(usersPhotos[i]));
   }
   similarListElement.appendChild(fragment);
+
+  uploadWindowOpen.addEventListener('change', window.modal.openFilters);
 
 })();
