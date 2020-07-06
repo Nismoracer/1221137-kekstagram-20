@@ -14,6 +14,21 @@
   var scaleSmaller = document.querySelector('.scale__control--smaller');
   var scaleBigger = document.querySelector('.scale__control--bigger');
 
+  var successfullUpload = function () {
+    closeFilters();
+    window.popup.successUpload();
+  };
+
+  var errorUpload = function () {
+    closeFilters();
+    window.popup.errorUpload();
+  };
+
+  var onFormSubmit = function (evt) {
+    window.transmit(successfullUpload, errorUpload, 'send', new FormData(form));
+    evt.preventDefault();
+  };
+
   window.modal = {
     openFilters: function () {
       filtersWindow.classList.remove('hidden');
@@ -26,8 +41,9 @@
       window.effects.initializeEffects();
       effectsList.addEventListener('change', window.effects.onEffectsPress);
       window.scale.initializeScale();
-      scaleSmaller.addEventListener('click', window.scale.onScaleSmaller.bind(null, scaleSmaller));
+      scaleSmaller.addEventListener('click', window.scale.onScaleSmaller);
       scaleBigger.addEventListener('click', window.scale.onScaleBigger);
+      form.addEventListener('submit', onFormSubmit);
     }
   };
 
@@ -51,6 +67,7 @@
     effectsList.removeEventListener('change', window.effects.onEffectsPress);
     scaleSmaller.removeEventListener('click', window.scale.onScaleSmaller);
     scaleBigger.removeEventListener('click', window.scale.onScaleBigger);
+    form.removeEventListener('submit', onFormSubmit);
     form.reset();
   };
 
