@@ -28,7 +28,7 @@
     chooseRandomPhotos: function (cb) {
       var uniquePhotos = [];
       var i = 0;
-      while (i < 10) {
+      while (i < MAX_RANDOM_PHOTOS) {
         var randomPhoto = getRandomElement(window.transmit.receivedPhotos);
         if (uniquePhotos.indexOf(randomPhoto) === -1) {
           uniquePhotos.push(randomPhoto);
