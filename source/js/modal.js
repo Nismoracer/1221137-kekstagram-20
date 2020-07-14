@@ -25,7 +25,7 @@
   };
 
   var onFormSubmit = function (evt) {
-    window.transmit(successfullUpload, errorUpload, 'send', new FormData(form));
+    window.transmit.exchange(successfullUpload, errorUpload, 'send', new FormData(form));
     evt.preventDefault();
   };
 
