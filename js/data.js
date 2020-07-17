@@ -15,7 +15,7 @@
       var receivedPhotosCopy = window.transmit.receivedPhotos.slice();
 
       receivedPhotosCopy.sort(function (first, second) {
-        if (first.comments.length < first.comments.length) {
+        if (first.comments.length < second.comments.length) {
           return 1;
         } else if (first.comments.length > second.comments.length) {
           return -1;

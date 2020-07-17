@@ -19,7 +19,7 @@
   "license": "MIT",
   "dependencies": {},
   "scripts": {
-    "test": "eslint source/js/",
+    "test": "eslint js/",
     "start": "gulp start"
   },
   "engines": {
