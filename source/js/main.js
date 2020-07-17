@@ -5,12 +5,56 @@
   var filtersSection = document.querySelector('.img-filters');
   var filtersForm = document.querySelector('.img-filters__form');
   var uploadSection = document.querySelector('.img-upload');
+  var thumbnails = document.querySelector('.pictures');
+  var bigPhoto = document.querySelector('.big-picture');
+  var addComments = bigPhoto.querySelector('.social__comments-loader');
+  var closePicture = bigPhoto.querySelector('.big-picture__cancel');
+  var body = document.querySelector('body');
+
 
   var similarElementTemplate = document.querySelector('#picture')
     .content
     .querySelector('.picture');
 
   var uploadWindowOpen = document.querySelector('#upload-file');
+
+  var closeBigPicture = function () {
+    bigPhoto.classList.add('hidden');
+    body.classList.remove('modal-open');
+    closePicture.removeEventListener('click', onPictureCloseClick);
+    document.removeEventListener('keydown', onPictureEscPress);
+    document.removeEventListener('click', onClickOutside);
+    addComments.removeEventListener('click', window.preview.addComments);
+  };
+
+  var onPictureCloseClick = function (evt) {
+    evt.preventDefault();
+    closeBigPicture();
+  };
+
+  var onPictureEscPress = function (evt) {
+    if (evt.key === 'Escape') {
+      closeBigPicture();
+    }
+  };
+
+  var onClickOutside = function (evt) {
+    if (evt.target === bigPhoto) {
+      closeBigPicture();
+    }
+  };
+
+  var onThumbnailClick = function (evt) {
+    if (evt.target.classList.contains('picture__img')) {
+      bigPhoto.classList.remove('hidden');
+      body.classList.add('modal-open');
+      window.preview.renderBigPhoto(evt.target.src);
+      closePicture.addEventListener('click', onPictureCloseClick);
+      document.addEventListener('keydown', onPictureEscPress);
+      document.addEventListener('click', onClickOutside);
+      addComments.addEventListener('click', window.preview.addComments);
+    }
+  };
 
   var renderPhotoElement = function (photo) {
     var currentPhoto = similarElementTemplate.cloneNode(true);
@@ -73,12 +117,15 @@
   };
 
 
-  window.transmit.exchange(renderPhotosList, window.popup.errorUpload, 'receive');
-  filtersSection.classList.remove('img-filters--inactive');
-  filtersForm.addEventListener('click', function (evt) {
-    onFiltersClick(evt);
-  });
+  window.transmit.exchange(function (xhrElements) {
+    renderPhotosList(xhrElements);
+    filtersSection.classList.remove('img-filters--inactive');
+    filtersForm.addEventListener('click', function (evt) {
+      onFiltersClick(evt);
+    });
+  }, window.popup.errorUpload, 'receive');
 
   uploadWindowOpen.addEventListener('change', window.modal.openFilters);
+  thumbnails.addEventListener('click', onThumbnailClick);
 
 })();
