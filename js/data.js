@@ -2,9 +2,9 @@
 (function () {
   var MAX_RANDOM_PHOTOS = 10;
 
-  var getRandomElement = function (array) {
-    var randomElementIndex = Math.floor(Math.random() * array.length);
-    return array[randomElementIndex];
+  var getRandomElement = function (parameters) {
+    var randomElementIndex = Math.floor(Math.random() * parameters.length);
+    return parameters[randomElementIndex];
   };
 
   window.data = {
@@ -19,9 +19,8 @@
           return 1;
         } else if (first.comments.length > second.comments.length) {
           return -1;
-        } else {
-          return 0;
         }
+        return 0;
       });
       cb(receivedPhotosCopy);
     },

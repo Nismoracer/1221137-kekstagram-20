@@ -63,7 +63,7 @@
       addComments.classList.remove('hidden');
       renderComments(currentComments);
     },
-    addComments: function () {
+    onUploadCommentsClick: function () {
       if (currentComments.length > 0) {
         renderComments(currentComments, lastCommentIndex);
       }

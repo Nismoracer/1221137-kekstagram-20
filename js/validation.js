@@ -2,7 +2,9 @@
 
 (function () {
 
-  var MAX_COMMENT_LENGTH = 10;
+  var MAX_COMMENT_LENGTH = 140;
+  var MAX_HASHTAG_LENGTH = 20;
+  var MAX_HASHTAG_NUMBERS = 5;
 
   var commentsField = document.querySelector('.text__description');
   var hashTags = document.querySelector('.text__hashtags');
@@ -34,8 +36,8 @@
     var i;
     var j;
     var sameTags = false;
-    var errorsArray = [];
-    var inputArray = [];
+    var errors = [];
+    var inputHashTags = [];
     var hashTagMask = /^#[a-zA-Z]+/;
     var resultErrorString = '';
 
@@ -44,43 +46,43 @@
     }
 
     var temporaryString = inputString.replace(/ +/g, ' ').trim();
-    inputArray = temporaryString.split(' ');
-    if (inputArray.length > 5) {
-      errorsArray.push('Количество хештегов не больше 5');
+    inputHashTags = temporaryString.split(' ');
+    if (inputHashTags.length > MAX_HASHTAG_NUMBERS) {
+      errors.push('Количество хештегов не больше ' + MAX_HASHTAG_NUMBERS);
     }
-    for (i = 0; i < inputArray.length; i++) {
-      if (inputArray[i].length > 20) {
-        errorsArray.push('Длина хештега не больше 20 символов');
+    for (i = 0; i < inputHashTags.length; i++) {
+      if (inputHashTags[i].length > MAX_HASHTAG_LENGTH) {
+        errors.push('Длина хештега не больше ' + MAX_HASHTAG_LENGTH + ' символов');
         break;
       }
     }
-    for (i = 0; i < inputArray.length; i++) {
+    for (i = 0; i < inputHashTags.length; i++) {
       if (!sameTags) {
-        for (j = i + 1; j < inputArray.length; j++) {
-          if (inputArray[i] === inputArray[j]) {
+        for (j = i + 1; j < inputHashTags.length; j++) {
+          if (inputHashTags[i] === inputHashTags[j]) {
             sameTags = true;
             break;
           }
         }
       } else {
-        errorsArray.push('Хештеги не должны повторяться');
+        errors.push('Хештеги не должны повторяться');
         break;
       }
     }
-    for (i = 0; i < inputArray.length; i++) {
-      if (inputArray[i] === '#') {
-        errorsArray.push('Хештег не должен быть пустым');
+    for (i = 0; i < inputHashTags.length; i++) {
+      if (inputHashTags[i] === '#') {
+        errors.push('Хештег не должен быть пустым');
         break;
-      } else if (!inputArray[i].match(hashTagMask)) {
-        errorsArray.push('Хештег начинается с #, и состоит из англ. букв');
+      } else if (!inputHashTags[i].match(hashTagMask)) {
+        errors.push('Хештег начинается с #, и состоит из англ. букв');
         break;
-      } else if (inputArray[i].match(hashTagMask)[0] !== inputArray[i]) {
-        errorsArray.push('Хештег начинается с #, и состоит из англ. букв');
+      } else if (inputHashTags[i].match(hashTagMask)[0] !== inputHashTags[i]) {
+        errors.push('Хештег начинается с #, и состоит из англ. букв');
         break;
       }
     }
 
-    resultErrorString = errorsArray.join(', ');
+    resultErrorString = errors.join(', ');
     return resultErrorString;
   };
 
