@@ -15,7 +15,9 @@
 
       xhr.addEventListener('load', function () {
         if (xhr.status === StatusCode.OK) {
-          window.transmit.receivedPhotos = xhr.response;
+          if (flag === 'receive') {
+            window.transmit.receivedPhotos = xhr.response;
+          }
           onSuccess(xhr.response);
         } else {
           if (flag === 'send') {

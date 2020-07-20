@@ -10,7 +10,7 @@
   var effectBar = document.querySelector('.img-upload__effect-level');
   var originalPicture = document.querySelector('#effect-none');
 
-  var previewImg = document.querySelector('.img-upload__preview');
+  var previewImg = document.querySelector('.img-upload__preview img');
 
   var checkedEffectId = '';
 
@@ -23,9 +23,9 @@
       'effects__preview--heat'
     ];
 
-    for (var i = 0; i < effectsClasses.length; i++) {
-      previewImg.classList.remove(effectsClasses[i]);
-    }
+    effectsClasses.forEach(function (it) {
+      previewImg.classList.remove(it);
+    });
 
     switch (currentEffect) {
       case 'effect-none':
@@ -103,14 +103,14 @@
       document.addEventListener('mouseup', onMouseUp);
     },
 
-    initializeEffects: function () {
+    initialize: function () {
       effectBar.classList.add('hidden');
       originalPicture.checked = true;
       setEffectVolume(0);
       applyPictureEffect('effect-none');
     },
 
-    onEffectsPress: function (evt) {
+    change: function (evt) {
       if (evt.target.id === 'effect-none') {
         effectBar.classList.add('hidden');
         checkedEffectId = 'effect-none';

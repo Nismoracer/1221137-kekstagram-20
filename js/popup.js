@@ -28,8 +28,8 @@
       var successTemplate = document.querySelector('#success')
         .content
         .querySelector('.success');
-      var popupElement = successTemplate.cloneNode(true);
-      addedPopup = main.appendChild(popupElement);
+      var popupWindow = successTemplate.cloneNode(true);
+      addedPopup = main.appendChild(popupWindow);
       var successButton = addedPopup.querySelector('.success__button');
       document.addEventListener('keydown', onPopupEscPress);
       document.addEventListener('click', onOutborderClick);
@@ -42,8 +42,8 @@
       var errorTemplate = document.querySelector('#error')
       .content
       .querySelector('.error');
-      var popupElement = errorTemplate.cloneNode(true);
-      addedPopup = main.appendChild(popupElement);
+      var popupWindow = errorTemplate.cloneNode(true);
+      addedPopup = main.appendChild(popupWindow);
       var errorMessage = document.querySelector('.error__title');
       var errorButton = addedPopup.querySelector('.error__button');
       if (message !== undefined) {
