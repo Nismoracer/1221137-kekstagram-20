@@ -5,9 +5,9 @@
   var addedPopup;
 
   var closePopup = function () {
-    main.removeChild(addedPopup);
     document.removeEventListener('click', onOutborderClick);
     document.removeEventListener('keydown', onPopupEscPress);
+    main.removeChild(addedPopup);
   };
 
   var onPopupEscPress = function (evt) {

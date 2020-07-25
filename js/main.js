@@ -87,26 +87,27 @@
     }
   };
 
-  var onDefaultFilterClick = window.util.debounce(function () {
+  var onDefaultFilterClick = function () {
     switchActiveFilter('default');
-    renderPhotosList(window.transmit.receivedPhotos);
-  });
+    debouncedRenderPhotosList(window.data.getReceivedPhotos);
+  };
 
-  var onRandomFilterClick = window.util.debounce(function () {
+  var onRandomFilterClick = function () {
     switchActiveFilter('random');
-    window.data.chooseRandomPhotos(renderPhotosList);
-  });
+    debouncedRenderPhotosList(window.data.chooseRandomPhotos);
+  };
 
-  var onDiscussedFilterClick = window.util.debounce(function () {
+  var onDiscussedFilterClick = function () {
     switchActiveFilter('discussed');
-    window.data.sortFromPopularToNot(renderPhotosList);
-  });
+    debouncedRenderPhotosList(window.data.sortFromPopularToNot);
+  };
 
-  var renderPhotosList = function (photos) {
-    var similarListElement = document.querySelector('.pictures');
+  var renderPhotosList = function (photosFetch) {
+    var photos = photosFetch();
+    var similarList = document.querySelector('.pictures');
 
-    while (similarListElement.lastChild !== uploadSection) {
-      similarListElement.removeChild(similarListElement.lastChild);
+    while (similarList.lastChild !== uploadSection) {
+      similarList.removeChild(similarList.lastChild);
     }
 
     var fragment = document.createDocumentFragment();
@@ -114,12 +115,13 @@
     photos.forEach(function (it) {
       fragment.appendChild(renderPhotoElement(it));
     });
-    similarListElement.appendChild(fragment);
+    similarList.appendChild(fragment);
   };
 
+  var debouncedRenderPhotosList = window.util.debounce(renderPhotosList);
 
-  window.transmit.exchange(function (xhrElements) {
-    renderPhotosList(xhrElements);
+  window.transmit.exchange(function () {
+    renderPhotosList(window.data.getReceivedPhotos);
     filtersSection.classList.remove('img-filters--inactive');
     defaultFilter.addEventListener('click', onDefaultFilterClick);
     randomFilter.addEventListener('click', onRandomFilterClick);

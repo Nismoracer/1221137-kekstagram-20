@@ -110,7 +110,7 @@
       applyPictureEffect('effect-none');
     },
 
-    change: function (evt) {
+    onIconClick: function (evt) {
       if (evt.target.id === 'effect-none') {
         effectBar.classList.add('hidden');
         checkedEffectId = 'effect-none';

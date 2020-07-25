@@ -66,7 +66,7 @@
       hashTags.addEventListener('input', window.validation.onHashTagsInvalidInput);
       valueHandle.addEventListener('mousedown', window.effects.onValueMove);
       window.effects.initialize();
-      effectsList.addEventListener('change', window.effects.change);
+      effectsList.addEventListener('change', window.effects.onIconClick);
       window.scale.initialize();
       scaleSmaller.addEventListener('click', window.scale.onMinusButtonClick);
       scaleBigger.addEventListener('click', window.scale.onPlusButtonClick);
@@ -91,7 +91,7 @@
     commentsField.removeEventListener('input', window.validation.onCommentsInvalidInput);
     hashTags.removeEventListener('input', window.validation.onHashTagsInvalidInput);
     valueHandle.removeEventListener('mousedown', window.effects.onValueMove);
-    effectsList.removeEventListener('change', window.effects.change);
+    effectsList.removeEventListener('change', window.effects.onIconClick);
     scaleSmaller.removeEventListener('click', window.scale.onMinusButtonClick);
     scaleBigger.removeEventListener('click', window.scale.onPlusButtonClick);
     form.removeEventListener('submit', onFormSubmit);
