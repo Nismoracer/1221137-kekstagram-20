@@ -8,12 +8,8 @@
   };
 
   window.data = {
-    sortFromPopularToNot: function (cb) {
-      if (window.transmit.receivedPhotos.length === 0) {
-        return;
-      }
+    sortFromPopularToNot: function () {
       var receivedPhotosCopy = window.transmit.receivedPhotos.slice();
-
       receivedPhotosCopy.sort(function (first, second) {
         if (first.comments.length < second.comments.length) {
           return 1;
@@ -22,9 +18,9 @@
         }
         return 0;
       });
-      cb(receivedPhotosCopy);
+      return receivedPhotosCopy;
     },
-    chooseRandomPhotos: function (cb) {
+    chooseRandomPhotos: function () {
       var uniquePhotos = [];
       var i = 0;
       while (i < MAX_RANDOM_PHOTOS) {
@@ -34,7 +30,10 @@
           i++;
         }
       }
-      cb(uniquePhotos);
+      return uniquePhotos;
+    },
+    getReceivedPhotos: function () {
+      return window.transmit.receivedPhotos;
     }
   };
 })();

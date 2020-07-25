@@ -18,7 +18,7 @@
           if (flag === 'receive') {
             window.transmit.receivedPhotos = xhr.response;
           }
-          onSuccess(xhr.response);
+          onSuccess();
         } else {
           if (flag === 'send') {
             onError();
