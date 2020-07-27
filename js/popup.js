@@ -3,10 +3,12 @@
 (function () {
   var main = document.querySelector('main');
   var addedPopup;
+  var successButton;
 
   var closePopup = function () {
     document.removeEventListener('click', onOutborderClick);
     document.removeEventListener('keydown', onPopupEscPress);
+    successButton.removeEventListener('click', onCloseClick);
     main.removeChild(addedPopup);
   };
 
@@ -22,6 +24,10 @@
     }
   };
 
+  var onCloseClick = function () {
+    closePopup();
+  };
+
   window.popup = {
 
     successUpload: function () {
@@ -30,12 +36,10 @@
         .querySelector('.success');
       var popupWindow = successTemplate.cloneNode(true);
       addedPopup = main.appendChild(popupWindow);
-      var successButton = addedPopup.querySelector('.success__button');
+      successButton = addedPopup.querySelector('.success__button');
       document.addEventListener('keydown', onPopupEscPress);
       document.addEventListener('click', onOutborderClick);
-      successButton.addEventListener('click', function () {
-        main.removeChild(addedPopup);
-      });
+      successButton.addEventListener('click', onCloseClick);
     },
 
     errorUpload: function (message, button) {
